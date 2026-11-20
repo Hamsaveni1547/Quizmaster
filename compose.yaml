@@ -1,0 +1,7 @@
+services:
+  quizmaster:
+    build: .
+    image: quizmaster:latest
+    container_name: quizmaster
+    ports: ["8080:80"]
+    restart: unless-stopped
