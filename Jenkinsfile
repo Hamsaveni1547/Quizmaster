@@ -1,10 +1,42 @@
+
 pipeline {
-  agent any
-  stages {
-    stage('Checkout Source Code') { steps { checkout scm } }
-    stage('Install Dependencies') { steps { sh 'npm ci || npm install' } }
-    stage('Run Tests and Build') { steps { sh 'npm test && npm run build' } }
-    stage('Build Docker Image') { steps { sh 'docker build -t quizmaster:${BUILD_NUMBER} -t quizmaster:latest .' } }
-    stage('Verify Docker Image') { steps { sh 'docker images quizmaster' } }
-  }
+    agent any
+
+    stages {
+        stage('Checkout Source Code') {
+            steps {
+                echo 'Source code checked out from GitHub'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat 'npm test'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                bat 'npm run build'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t quizmaster .'
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                bat 'docker images quizmaster'
+            }
+        }
+    }
 }
